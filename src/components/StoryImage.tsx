@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ImageConfig } from '../types/tribute';
+import { useTheme } from '../context/ThemeContext';
 
 interface StoryImageProps {
   config: ImageConfig;
@@ -15,11 +16,12 @@ export const StoryImage: React.FC<StoryImageProps> = ({
   config,
   className = '',
   priority = false,
-  theme = 'dark',
+  theme,
   blend = 'dark-soft',
   objectFit = 'contain',
   maxHeight = 'max-h-[70vh]',
 }) => {
+  const { isDark } = useTheme();
   const [currentSrc, setCurrentSrc] = useState<string>(config.src);
   const [loadState, setLoadState] = useState<'loading' | 'loaded' | 'error'>('loading');
 
@@ -53,15 +55,13 @@ export const StoryImage: React.FC<StoryImageProps> = ({
 
   // Determine masking / blending classes
   let blendClass = '';
-  if (blend === 'dark-soft') {
+  if (blend === 'dark-soft' || blend === 'ivory-soft') {
     blendClass = 'mask-edges-dark';
   } else if (blend === 'dark-bottom') {
     blendClass = 'mask-fade-bottom';
-  } else if (blend === 'ivory-soft') {
-    blendClass = 'mask-edges-dark';
   }
 
-  const isDark = theme === 'dark';
+  const effectiveIsDark = theme !== undefined ? theme === 'dark' : isDark;
 
   return (
     <div className={`relative w-full flex flex-col items-center justify-center ${className}`}>
@@ -88,7 +88,7 @@ export const StoryImage: React.FC<StoryImageProps> = ({
         {/* Ambient subtle glow beneath photo matching theme */}
         <div
           className={`absolute inset-0 pointer-events-none -z-10 blur-3xl opacity-20 ${
-            isDark ? 'bg-[#E6B84A]' : 'bg-[#D6CEBE]'
+            effectiveIsDark ? 'bg-[#E6B84A]' : 'bg-[#D6CEBE]'
           }`}
           aria-hidden="true"
         />
@@ -98,7 +98,7 @@ export const StoryImage: React.FC<StoryImageProps> = ({
       {loadState === 'error' && (
         <div
           className={`w-full max-w-md my-8 p-6 text-center rounded-none border border-dashed select-none ${
-            isDark
+            effectiveIsDark
               ? 'border-[#163021] bg-[#10241A]/50 text-[#F5F7F3]'
               : 'border-[#D6CEBE] bg-[#EBE6DF]/50 text-[#07100C]'
           }`}

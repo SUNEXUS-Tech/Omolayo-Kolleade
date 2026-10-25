@@ -16,21 +16,52 @@
 }
 
 :root {
-  --bg-deep: #07100C;
-  --bg-secondary: #10241A;
-  --bg-supporting: #163021;
-  --bg-ivory: #F5F0E6;
-  --color-main: #F5F7F3;
-  --color-muted: #C8D1CB;
-  --color-gold: #E6B84A;
+  --bg-canvas: #07100C;
+  --bg-card: #10241A;
+  --bg-subtle: #0D1C14;
+  --bg-accent: #163021;
+  --border-theme: #163021;
+  --text-primary: #F5F7F3;
+  --text-muted: #C8D1CB;
+  --accent-gold: #E6B84A;
+  --accent-gold-hover: #F5F0E6;
   --color-warm: #D8A078;
+  --nav-bg: rgba(7, 16, 12, 0.95);
+  --section-alt-bg: #10241A;
+  --section-ivory-bg: #F5F0E6;
+  --section-ivory-text: #07100C;
+}
+
+[data-theme="light"],
+html.light {
+  --bg-canvas: #FAF6EE;
+  --bg-card: #EFE8DA;
+  --bg-subtle: #F3ECE0;
+  --bg-accent: #E5DDCE;
+  --border-theme: #D6CEBE;
+  --text-primary: #0A1C14;
+  --text-muted: #48574D;
+  --accent-gold: #B58218;
+  --accent-gold-hover: #8C6514;
+  --color-warm: #A0643C;
+  --nav-bg: rgba(250, 246, 238, 0.95);
+  --section-alt-bg: #F4EFE6;
+  --section-ivory-bg: #F1ECE0;
+  --section-ivory-text: #0A1C14;
 }
 
 html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
-  background-color: #07100C;
-  color: #F5F7F3;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  min-height: 100vh;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -50,19 +81,19 @@ html {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07100C;
+  background: var(--bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #163021;
+  background: var(--border-theme);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E6B84A;
+  background: var(--accent-gold);
 }
 
 /* Accessible focus styling */
 :focus-visible {
-  outline: 2px solid #E6B84A;
+  outline: 2px solid var(--accent-gold);
   outline-offset: 3px;
 }
 
@@ -88,4 +119,12 @@ html {
 
 .font-headline {
   font-family: var(--font-headline);
+}
+
+/* Editorial justified text formatting */
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
